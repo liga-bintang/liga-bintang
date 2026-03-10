@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lucky Draw Liga Bintang</title>
+
+<style>
+
+body{
+font-family:Arial;
+text-align:center;
+background:#111;
+color:white;
+}
+
+h1{
+margin-top:20px;
+font-size:40px;
+color:gold;
+text-shadow:2px 2px 10px yellow;
+}
+
+#wheel{
+width:350px;
+height:350px;
+border-radius:50%;
+border:8px solid gold;
+margin:40px auto;
+transition:5s;
+}
+
+#spin{
+padding:15px 40px;
+font-size:20px;
+cursor:pointer;
+background:gold;
+border:none;
+border-radius:10px;
+font-weight:bold;
+}
+
+input{
+padding:10px;
+font-size:18px;
+text-align:center;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>⭐ Lucky Draw Liga Bintang ⭐</h1>
+
+<p>Masukkan Kode Akses</p>
+<input type="text" id="kode" placeholder="Kode Akses">
+
+<br><br>
+
+<canvas id="wheel" width="350" height="350"></canvas>
+
+<br><br>
+
+<button id="spin">SPIN</button>
+
+<h2 id="result"></h2>
+
+<script>
+
+const kodeAkses = [
+"B7K9X2",
+"L4P8Q1",
+"Z6M3T9",
+"R2D7W5",
+"F8Y1N4"
+];
+
+const hadiah = [
+"5 RB",
+"10 RB",
+"20 RB",
+"50 RB",
+"100 RB",
+"250 RB"
+];
+
+const canvas = document.getElementById("wheel");
+const ctx = canvas.getContext("2d");
+
+const colors = [
+"#ff4d4d",
+"#ff944d",
+"#ffff4d",
+"#4dff88",
+"#4dc3ff",
+"#b84dff"
+];
+
+let angle = 0;
+
+function drawWheel(){
+
+let arc = 2*Math.PI/hadiah.length;
+
+for(let i=0;i<hadiah.length;i++){
+
+ctx.beginPath();
+ctx.fillStyle=colors[i];
+
+ctx.moveTo(175,175);
+ctx.arc(175,175,175,i*arc,(i+1)*arc);
+
+ctx.fill();
+
+ctx.save();
+ctx.translate(175,175);
+ctx.rotate(i*arc+arc/2);
+
+ctx.fillStyle="black";
+ctx.font="bold 18px Arial";
+
+ctx.fillText(hadiah[i],60,10);
+
+ctx.restore();
+
+}
+
+}
+
+drawWheel();
+
+document.getElementById("spin").onclick=function(){
+
+let kodeInput = document.getElementById("kode").value;
+
+if(!kodeAkses.includes(kodeInput)){
+alert("Kode akses salah!");
+return;
+}
+
+let putaran = 360 * 5;
+angle += putaran;
+
+canvas.style.transform="rotate("+angle+"deg)";
+
+setTimeout(()=>{
+
+document.getElementById("result").innerText =
+"🎉 Selamat! Anda mendapatkan 5 RB";
+
+},5000);
+
+}
+
+</script>
+
+</body>
+</html>
